@@ -1,0 +1,1 @@
+Labs for "Intellectual systems" course.
