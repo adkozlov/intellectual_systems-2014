@@ -8,11 +8,11 @@ import java.util.*;
 /**
  * @author adkozlov
  */
-public class Index {
+public class ReverseIndex {
 
     private final Map<String, Set<Integer>> index;
 
-    public Index(List<Terminus> terminuses) {
+    public ReverseIndex(List<Terminus> terminuses) {
         index = new TreeMap<>();
 
         for (Terminus terminus : terminuses) {
@@ -24,15 +24,19 @@ public class Index {
         }
     }
 
-    public static final String FORMAT = "%s: %s\n";
-
     public void writeToFile(String fileName) {
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter(fileName));
 
             for (Map.Entry<String, Set<Integer>> entry : index.entrySet()) {
-                writer.append(String.format(FORMAT, entry.getKey(), entry.getValue()));
+                writer.append(entry.getKey() + " ");
+
+                for (Integer i : entry.getValue()) {
+                    writer.append(i.toString() + " ");
+                }
+
+                writer.append("\n");
             }
         } catch (IOException e) {
             System.err.println(e.getLocalizedMessage());
