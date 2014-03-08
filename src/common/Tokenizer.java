@@ -1,6 +1,8 @@
-package lab_01;
+package common;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * @author adkozlov
@@ -32,8 +34,8 @@ public final class Tokenizer {
         return result;
     }
 
-    public static Set<String> getTokens(List<? extends Token> tokens) {
-        Set<String> result = new TreeSet<>();
+    public static List<String> getTokens(List<? extends Token> tokens) {
+        List<String> result = new LinkedList<>();
         for (Token token : tokens) {
             result.add(token.getToken());
         }

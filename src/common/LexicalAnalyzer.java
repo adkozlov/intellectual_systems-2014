@@ -1,9 +1,6 @@
-package lab_01;
+package common;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author adkozlov
@@ -25,6 +22,9 @@ public class LexicalAnalyzer {
     }
 
     public static Set<String> getTerminuses(List<? extends Terminus> terminuses) {
-        return Tokenizer.getTokens(terminuses);
+        Set<String> result = new TreeSet<>();
+        result.addAll(Tokenizer.getTokens(terminuses));
+
+        return result;
     }
 }

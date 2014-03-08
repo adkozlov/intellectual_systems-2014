@@ -1,6 +1,6 @@
-package lab_01;
+package common;
 
-import static lab_01.LexicalAnalyzer.createTerminus;
+import static common.LexicalAnalyzer.createTerminus;
 
 /**
  * @author adkozlov

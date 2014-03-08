@@ -1,4 +1,4 @@
-package lab_01;
+package common;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -29,7 +29,6 @@ public final class HTMLParser {
         List<String> result = new LinkedList<>();
         for (Element element : elements) {
             result.add(element.text());
-
         }
 
         return result;

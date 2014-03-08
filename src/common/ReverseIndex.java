@@ -1,4 +1,4 @@
-package lab_01;
+package common;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -11,9 +11,11 @@ import java.util.*;
 public class ReverseIndex {
 
     private final Map<String, Set<Integer>> index;
+    private final int documentsCount;
 
-    public ReverseIndex(List<Terminus> terminuses) {
+    public ReverseIndex(List<Terminus> terminuses, int documentsCount) {
         index = new TreeMap<>();
+        this.documentsCount = documentsCount;
 
         for (Terminus terminus : terminuses) {
             String tokenString = terminus.getToken();
@@ -22,6 +24,23 @@ public class ReverseIndex {
             set.add(terminus.getDocumentId());
             index.put(terminus.getToken(), set);
         }
+    }
+
+    public Set<Integer> terminusSet(String terminus) {
+        if (index.containsKey(terminus)) {
+            return new TreeSet<>(index.get(terminus));
+        } else {
+            throw new NoSuchElementException(String.format("Index doesn't contain the terminus: %s.", terminus));
+        }
+    }
+
+    public Set<Integer> universeSet() {
+        Set<Integer> result = new TreeSet<>();
+        for (int i = 0; i < documentsCount; i++) {
+            result.add(i);
+        }
+
+        return result;
     }
 
     public void writeToFile(String fileName) {
@@ -33,7 +52,7 @@ public class ReverseIndex {
                 writer.append(entry.getKey() + " ");
 
                 for (Integer i : entry.getValue()) {
-                    writer.append(i.toString() + " ");
+                    writer.append((i + 1) + " ");
                 }
 
                 writer.append("\n");
@@ -51,7 +70,7 @@ public class ReverseIndex {
         }
     }
 
-    public static double averageLength(Set<String> strings) {
+    public static double averageLength(Collection<String> strings) {
         double totalLength = 0;
         for (String string : strings) {
             totalLength += string.length();

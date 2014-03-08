@@ -1,4 +1,4 @@
-package lab_01;
+package common;
 
 /**
  * @author adkozlov
