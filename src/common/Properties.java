@@ -10,8 +10,9 @@ public class Properties {
 
     // first lab
     public static final String PATH = System.getProperty("user.dir") + System.getProperty("file.separator");
-    public static final String OUTPUT_FILENAME = "karenina.idx";
+    public static final String HTML_FILENAME = "karenina.html";
+    public static final String INDEX_OUTPUT_FILENAME = "karenina.idx";
 
     // second lab
-    public static final String INPUT_FILENAME = "karenina.qrs";
+    public static final String QUERIES_INPUT_FILENAME = "karenina.qrs";
 }

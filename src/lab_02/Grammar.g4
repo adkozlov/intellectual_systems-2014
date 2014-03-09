@@ -11,22 +11,40 @@ grammar Grammar;
     private ReverseIndex index = null;
 }
 
-file[ReverseIndex index] returns [List<Set<Integer>> result]
+file[ReverseIndex index] returns [List<List<Integer>> result]
     @init {
         $result = new LinkedList<>();
         this.index = index;
     }
-    :   NEW_LINE? expression {
-        $result.add($expression.result);
+    :   NEW_LINE? query {
+        $result.add($query.result);
     }
-    ( NEW_LINE expression {
-        $result.add($expression.result);
+    ( NEW_LINE query {
+        $result.add($query.result);
     } )* NEW_LINE? EOF
     ;
 
-expression returns [Set<Integer> result]
+query returns [List<Integer> result]
+@init {
+    List<Integer> temp = null;
+}
     :   orExpression {
-        $result = $orExpression.result;
+        $result = new LinkedList($orExpression.result);
+    } ( resultsCount {
+        temp = new LinkedList<>();
+
+        ListIterator<Integer> iterator = $result.listIterator();
+        for (int i = 0; i < $resultsCount.value && iterator.hasNext(); i++) {
+            temp.add(iterator.next());
+        }
+
+        $result = temp;
+    } )?
+    ;
+
+resultsCount returns [int value]
+    :   INT {
+        $value = Integer.valueOf($INT.text);
     }
     ;
 
@@ -47,19 +65,23 @@ andExpression returns [Set<Integer> result]
     ;
 
 maybeNotExpression returns [Set<Integer> result]
-    :   atom {
-        $result = $atom.result;
-    } | ( NOT atom {
+    :   atomExpression {
+        $result = $atomExpression.result;
+    } | ( NOT atomExpression {
         $result = index.universeSet();
-        $result.removeAll($atom.result);
+        $result.removeAll($atomExpression.result);
     } )
     ;
 
-atom returns [Set<Integer> result]
+atomExpression returns [Set<Integer> result]
+@init {
+    String terminus = null;
+}
     :   TERMINUS {
-        $result = index.terminusSet($TERMINUS.text);
-    } | ( LEFT_PARENTHESIS expression RIGHT_PARENTHESIS {
-        $result = $expression.result;
+        terminus = $TERMINUS.text;
+        $result = index.terminusSet(terminus);
+    } | ( LEFT_PARENTHESIS orExpression RIGHT_PARENTHESIS {
+        $result = $orExpression.result;
     } )
     ;
 
@@ -76,6 +98,15 @@ NEW_LINE
         | '\n'
     )+
     ;
+
+fragment DIGIT
+    :   '0' .. '9'
+    ;
+
+INT
+    :   DIGIT+
+    ;
+
 
 OR
     :   'OR'

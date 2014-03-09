@@ -7,7 +7,6 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author adkozlov
@@ -16,16 +15,17 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            List<String> documents = HTMLParser.getParagraphs(Properties.URL, Properties.REGEX);
+            List<String> documents = HTMLParser.getParagraphsFromFile(Properties.PATH + Properties.HTML_FILENAME, Properties.REGEX);
+            //HTMLParser.getParagraphs(Properties.URL, Properties.REGEX);
             ReverseIndex index = new ReverseIndex(LexicalAnalyzer.analyze(Tokenizer.tokenize(documents)), documents.size());
 
-            CharStream stream = new ANTLRFileStream(Properties.INPUT_FILENAME);
+            CharStream stream = new ANTLRFileStream(Properties.QUERIES_INPUT_FILENAME);
             GrammarLexer lexer = new GrammarLexer(stream);
             GrammarParser parser = new GrammarParser(new CommonTokenStream(lexer));
-            List<Set<Integer>> list = parser.file(index).result;
+            List<List<Integer>> lists = parser.file(index).result;
 
-            for (Set<Integer> set : list) {
-                for (int i : set) {
+            for (List<Integer> list : lists) {
+                for (int i : list) {
                     System.out.print((i + 1) + " ");
                 }
 

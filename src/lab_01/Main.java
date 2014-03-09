@@ -26,9 +26,9 @@ public class Main {
             System.out.printf("Terminus average length = %.3f\n", ReverseIndex.averageLength(terminusesSet));
 
             ReverseIndex index = new ReverseIndex(terminuses, documents.size());
-            index.writeToFile(Properties.OUTPUT_FILENAME);
+            index.writeToFile(Properties.INDEX_OUTPUT_FILENAME);
 
-            System.out.printf("Reverse index is written into \'%s%s\'", Properties.PATH, Properties.OUTPUT_FILENAME);
+            System.out.printf("Reverse index is written into \'%s%s\'", Properties.PATH, Properties.INDEX_OUTPUT_FILENAME);
             System.out.println();
         } catch (IOException e) {
             System.err.println(e.getLocalizedMessage());
