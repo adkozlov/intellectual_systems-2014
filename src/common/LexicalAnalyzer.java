@@ -11,6 +11,15 @@ public class LexicalAnalyzer {
         return token.toLowerCase();
     }
 
+    public static List<String> analyzeDocument(List<String> tokens) {
+        List<String> result = new LinkedList<>();
+        for (String token : tokens) {
+            result.add(token);
+        }
+
+        return result;
+    }
+
     public static List<Terminus> analyze(List<Token> tokens) {
         List<Terminus> result = new LinkedList<>();
         for (Token token : tokens) {

@@ -12,9 +12,23 @@ public final class Tokenizer {
     public static final String PUNCTUATION_REGEX = "\\p{Punct}+";
     public static final String SPACES_REGEX = "[\\s\\u00a0]";
 
+    private static String removePunctuation(String document) {
+        return document.replaceAll(PUNCTUATION_REGEX, "").replaceAll(SPACES_REGEX, " ");
+    }
+
+    public static List<String> tokenizeDocument(String document) {
+        StringTokenizer stringTokenizer = new StringTokenizer(removePunctuation(document));
+
+        List<String> result = new LinkedList<>();
+        while (stringTokenizer.hasMoreTokens()) {
+            result.add(stringTokenizer.nextToken());
+        }
+
+        return result;
+    }
+
     private static List<Token> tokenize(String document, int documentId) {
-        String documentWithoutPunctuation = document.replaceAll(PUNCTUATION_REGEX, "").replaceAll(SPACES_REGEX, " ");
-        StringTokenizer stringTokenizer = new StringTokenizer(documentWithoutPunctuation);
+        StringTokenizer stringTokenizer = new StringTokenizer(removePunctuation(document));
 
         List<Token> result = new LinkedList<>();
         while (stringTokenizer.hasMoreTokens()) {

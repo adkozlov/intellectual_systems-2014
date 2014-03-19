@@ -13,6 +13,10 @@ public class ReverseIndex {
     private final Map<String, Set<Integer>> index;
     private final int documentsCount;
 
+    public ReverseIndex(List<String> documents) {
+        this(LexicalAnalyzer.analyze(Tokenizer.tokenize(documents)), documents.size());
+    }
+
     public ReverseIndex(List<Terminus> terminuses, int documentsCount) {
         index = new TreeMap<>();
         this.documentsCount = documentsCount;
