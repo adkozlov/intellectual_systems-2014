@@ -1,5 +1,7 @@
 package lab_02;
 
+import common.Query;
+
 import java.util.List;
 
 /**
@@ -9,13 +11,13 @@ public class QueryResult {
 
     private final String text;
     private final List<Integer> result;
-    private final List<String> matchedWords;
+    private final Query matchedWords;
     private final int count;
 
     QueryResult(String text, List<Integer> result, List<String> matchedWords, int count) {
         this.text = text;
         this.result = result;
-        this.matchedWords = matchedWords;
+        this.matchedWords = new Query(matchedWords);
         this.count = count;
     }
 
@@ -27,7 +29,7 @@ public class QueryResult {
         return result;
     }
 
-    public List<String> getMatchedWords() {
+    public Query getMatchedWords() {
         return matchedWords;
     }
 

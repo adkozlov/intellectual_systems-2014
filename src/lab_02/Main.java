@@ -29,12 +29,15 @@ public class Main {
             List<QueryResult> results = parser.file(reverseIndex).result;
             ForwardIndex forwardIndex = new ForwardIndex(documents);
 
+            BM25 bm25 = new BM25(reverseIndex, forwardIndex);
+
             for (QueryResult result : results) {
                 System.out.println("Query: " + result.getText());
 
                 List<Snippet> snippets = new ArrayList<>();
                 for (int index : result.getResult()) {
-                    snippets.add(new Snippet(forwardIndex.getTerminuses(index), index, result.getMatchedWords()));
+                    Query query = result.getMatchedWords();
+                    snippets.add(new Snippet(forwardIndex.getTerminuses(index), index, query, bm25.getScore(forwardIndex.getDocument(index), query)));
                 }
                 Collections.sort(snippets);
 

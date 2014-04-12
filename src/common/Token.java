@@ -23,10 +23,7 @@ public class Token implements Comparable<Token> {
 
     @Override
     public String toString() {
-        return "Token{" +
-                "token='" + token + '\'' +
-                ", documentId=" + documentId +
-                '}';
+        return token;
     }
 
     @Override
@@ -36,9 +33,8 @@ public class Token implements Comparable<Token> {
 
         Token token1 = (Token) o;
 
-        if (token != null ? !token.equals(token1.token) : token1.token != null) return false;
+        return !(token != null ? !token.equals(token1.token) : token1.token != null);
 
-        return true;
     }
 
     @Override

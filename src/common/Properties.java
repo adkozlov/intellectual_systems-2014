@@ -15,4 +15,8 @@ public class Properties {
 
     // second lab
     public static final String QUERIES_INPUT_FILENAME = "karenina.qrs";
+
+    //third lab
+    public static final double DEFAULT_K1 = 1.2;
+    public static final double DEFAULT_B = 0.75;
 }

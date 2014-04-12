@@ -8,20 +8,36 @@ import java.util.List;
  */
 public class ForwardIndex {
 
-    private final List<List<String>> documents;
+    private final List<Document> documents;
+    private final double averageLength;
 
     public ForwardIndex(List<String> notAnalyzedDocuments) {
+        int sumLength = 0;
+
         documents = new ArrayList<>();
         for (String document : notAnalyzedDocuments) {
-            documents.add(LexicalAnalyzer.analyzeDocument(Tokenizer.tokenizeDocument(document)));
+            Document d = new Document(LexicalAnalyzer.analyze(Tokenizer.tokenize(document)));
+            documents.add(d);
+
+            sumLength += d.getLength();
         }
+
+        averageLength = sumLength / getDocumentsCount();
     }
 
-    public List<List<String>> getDocuments() {
-        return documents;
-    }
-
-    public List<String> getTerminuses(int index) {
+    public Document getDocument(int index) {
         return documents.get(index);
+    }
+
+    public int getDocumentsCount() {
+        return documents.size();
+    }
+
+    public Document getTerminuses(int index) {
+        return documents.get(index);
+    }
+
+    public double getAverageLength() {
+        return averageLength;
     }
 }

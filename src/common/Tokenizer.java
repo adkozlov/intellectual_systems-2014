@@ -16,15 +16,8 @@ public final class Tokenizer {
         return document.replaceAll(PUNCTUATION_REGEX, "").replaceAll(SPACES_REGEX, " ");
     }
 
-    public static List<String> tokenizeDocument(String document) {
-        StringTokenizer stringTokenizer = new StringTokenizer(removePunctuation(document));
-
-        List<String> result = new LinkedList<>();
-        while (stringTokenizer.hasMoreTokens()) {
-            result.add(stringTokenizer.nextToken());
-        }
-
-        return result;
+    public static List<Token> tokenize(String document) {
+        return tokenize(document, 0);
     }
 
     private static List<Token> tokenize(String document, int documentId) {
